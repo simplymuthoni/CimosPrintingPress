@@ -1,173 +1,899 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Blog</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-      <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="css/style.css">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="images/fevicon.png" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <!-- fonts -->
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-      <!-- font awesome css -->
-      <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-   </head>
-   <body>
-      <!-- header section start -->
-      <div class="header_section header_bg">
-         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-               <div class="logo"><a href="index.html"><img src="images/CimosWeb.png"></a></div>
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-               </button>
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav ml-auto">
-                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="portfolio.html">Portfolio</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="service.html">Service</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                     </li>
-                  </ul>
-               </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Cimos Printing Press | Industry Insights & Tips</title>
+    <meta name="description" content="Stay updated with the latest printing industry trends, expert tips, and insights from Cimos Printing Press professionals.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Modern Color Palette */
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f59e0b;
+            --accent-color: #10b981;
+            --dark-color: #111827;
+            --light-gray: #f8fafc;
+            --medium-gray: #64748b;
+            --border-color: #e2e8f0;
+            --white: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            
+            /* Typography */
+            --font-primary: 'Inter', sans-serif;
+            --font-display: 'Playfair Display', serif;
+            
+            /* Spacing */
+            --section-padding: 5rem 0;
+            --container-padding: 0 1.5rem;
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 60%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(15deg);
+            border-radius: 50px;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        /* Blog Content */
+        .blog-content {
+            padding: var(--section-padding);
+        }
+
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-color);
+            background: var(--white);
+            color: var(--text-dark);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+            transition: var(--transition-slow);
+        }
+
+        .blog-card:hover::before {
+            left: 100%;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .blog-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-card-content {
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .blog-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .blog-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .blog-title a:hover {
+            color: var(--primary-color);
+        }
+
+        .blog-excerpt {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .blog-read-more:hover {
+            gap: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Featured Post */
+        .featured-post {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 400px;
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        /* Newsletter Signup */
+        .newsletter {
+            background: var(--light-gray);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .newsletter p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: var(--text-light);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: var(--shadow-lg);
+                border-radius: 0 0 20px 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-content {
+                padding: 2rem;
+            }
+
+            .featured-title {
+                font-size: 1.5rem;
+            }
+
+            .blog-filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .newsletter-input {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .blog-card-content,
+            .featured-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary-color); }
+        .bg-primary { background-color: var(--primary-color); }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <img src="images/cimos.png" alt="Cimos Logo" class="logo-img" style="width: 50px; height: 50px; border-radius: 5%;">
+                <a href="index.html" class="logo">Cimos</a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="service.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="quote.html" class="nav-link">Get Quote</a></li>
+                </ul>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </nav>
-         </div>
-      </div>
-      <!-- header section end -->
-      <!-- blog section start -->
-      <div class="blog_section layout_padding margin_top90">
-         <div class="container">
-            <div class="row">
-               <div class="col-sm-12">
-                  <h1 class="blog_taital">Our <span class="blog_taital_1">Blog</span></h1>
-                  <p class="blog_text">At Cimos Printing Press, we believe great printing tells a powerful story. <br/> Our blog shares expert tips, industry insights and the latest trends in the world of printing."</p>
-               </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-title">Our <span style="color: var(--secondary-color);">Blog</span></h1>
+                <p class="page-subtitle">Stay updated with the latest printing industry trends, expert tips, and insights from our professional team.</p>
             </div>
-         </div>
-         <div class="blog_section_2">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-4">
-                     <div class="blog_box">
-                        <div class="blog_img">
-                           <h4 class="date_text">June 06</h4>
-                           <h4 class="prep_text">The Power of Print</h4>
-                        </div>
-                        <p class="lorem_text">Explore how printed materials like receipts, invoices, and delivery have shaped our lives.</p>
-                     </div>
-                  </div>
-                  <div class="col-md-4">
-                     <div class="blog_box">
-                        <div class="blog_img_2">
-                           <h4 class="date_text">June 01</h4>
-                           <h4 class="prep_text">From Design to Delivery</h4>
-                        </div>
-                        <p class="lorem_text">Behind the Scenes at Cimos Printing Press. Showcasing our team, technology, and quality assurance practices.</p>
-                     </div>
-                  </div>
-                  <div class="col-md-4">
-                     <div class="blog_box">
-                        <div class="blog_box_3">
-                           <div class="blog_img">
-                              <h4 class="date_text">May 30</h4>
-                              <h4 class="prep_text">Eco-Friendly Printing </h4>
-                           </div>
-                           <p class="lorem_text">Highlight our sustainability efforts—like soy-based inks, recycled paper, to attract environmentally conscious clients.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-content">
+        <div class="container">
+            <!-- Blog Filters -->
+            <div class="blog-filters">
+                <button class="filter-btn active" data-filter="all">All Posts</button>
+                <button class="filter-btn" data-filter="tips">Tips & Guides</button>
+                <button class="filter-btn" data-filter="technology">Technology</button>
+                <button class="filter-btn" data-filter="business">Business</button>
+                <button class="filter-btn" data-filter="sustainability">Sustainability</button>
             </div>
-         </div>
-      </div>
-      <!-- blog section end -->
-      <!-- footer section start -->
-      <div class="footer_section margin_top90">
-         <div class="container">
-            <div class="location_text">
-               <ul>
-                  <li>
-                     <a href="https://www.google.com/maps/place/MWEA+APEX+COLLEGE/@-0.6843241,37.3517941,17z/data=!3m1!4b1!4m6!3m5!1s0x1826210ef46f6dd5:0x3331084c5c745d43!8m2!3d-0.6843241!4d37.354369!16s%2Fg%2F11c0pzqkf0?authuser=0&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                     <a href="tel:+254742638204"><i class="fa fa-phone" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                     <a href="mailto:cimossupplies@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                  </li>
-               </ul>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid">
+                <!-- Featured Post -->
+                <article class="blog-card featured-post" data-category="technology">
+                    <div class="featured-image">
+                        <img src="images/bg1.png" alt="Featured Blog Post">
+                    </div>
+                    <div class="featured-content">
+                        <span class="featured-badge">Featured</span>
+                        <h2 class="featured-title">The Future of Digital Printing: Trends to Watch in 2024</h2>
+                        <div class="blog-meta">
+                            <div class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>July 01, 2024</span>
+                            </div>
+                            <div class="blog-author">
+                                <i class="fas fa-user"></i>
+                                <span>Cimos Team</span>
+                            </div>
+                        </div>
+                        <p class="blog-excerpt">Discover the revolutionary technologies and trends shaping the future of digital printing. From AI-powered print optimization to sustainable materials, explore what's next for the printing industry.</p>
+                        <a href="#" class="blog-read-more">
+                            Read Full Article
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Regular Blog Posts -->
+                <article class="blog-card" data-category="tips">
+                    <div class="blog-image">
+                        <img src="images/bg2.png" alt="Print Quality Tips">
+                        <span class="blog-category">Tips</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <div class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>June 28, 2024</span>
+                            </div>
+                            <div class="blog-author">
+                                <i class="fas fa-user"></i>
+                                <span>Print Expert</span>
+                            </div>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="#">10 Essential Tips for Perfect Print Quality</a>
+                        </h3>
+                        <p class="blog-excerpt">Master the art of achieving perfect print quality with these professional tips from our experienced printing team. Learn about paper selection, color management, and more.</p>
+                        <a href="#" class="blog-read-more">
+                            Read More
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="business">
+                    <div class="blog-image">
+                        <img src="images/bg3.png" alt="Marketing Materials">
+                        <span class="blog-category">Business</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <div class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>June 25, 2024</span>
+                            </div>
+                            <div class="blog-author">
+                                <i class="fas fa-user"></i>
+                                <span>Marketing Team</span>
+                            </div>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="#">How Print Marketing Boosts Brand Recognition</a>
+                        </h3>
+                        <p class="blog-excerpt">Explore the psychology behind print marketing and discover how tangible materials create lasting impressions that digital media simply cannot match.</p>
+                        <a href="#" class="blog-read-more">
+                            Read More
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="sustainability">
+                    <div class="blog-image">
+                        <i class="fas fa-leaf"></i>
+                        <span class="blog-category">Sustainability</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <div class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>June 22, 2024</span>
+                            </div>
+                            <div class="blog-author">
+                                <i class="fas fa-user"></i>
+                                <span>Eco Team</span>
+                            </div>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="#">Sustainable Printing: Our Green Commitment</a>
+                        </h3>
+                        <p class="blog-excerpt">Learn about our eco-friendly printing practices, from recycled materials to energy-efficient processes. Discover how we're reducing our environmental footprint.</p>
+                        <a href="#" class="blog-read-more">
+                            Read More
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="technology">
+                    <div class="blog-image">
+                        <i class="fas fa-cogs"></i>
+                        <span class="blog-category">Technology</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <div class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>June 20, 2024</span>
+                            </div>
+                            <div class="blog-author">
+                                <i class="fas fa-user"></i>
+                                <span>Tech Team</span>
+                            </div>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="#">Advanced Plate Making Techniques</a>
+                        </h3>
+                        <p class="blog-excerpt">Dive deep into the technical aspects of modern plate making technology and learn how precision engineering ensures exceptional print quality.</p>
+                        <a href="#" class="blog-read-more">
+                            Read More
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="tips">
+                    <div class="blog-image">
+                        <i class="fas fa-palette"></i>
+                        <span class="blog-category">Tips</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <div class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>June 18, 2024</span>
+                            </div>
+                            <div class="blog-author">
+                                <i class="fas fa-user"></i>
+                                <span>Design Team</span>
+                            </div>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="#">Color Management in Professional Printing</a>
+                        </h3>
+                        <p class="blog-excerpt">Understanding color profiles, calibration, and consistency across different print media. A comprehensive guide to achieving accurate colors every time.</p>
+                        <a href="#" class="blog-read-more">
+                            Read More
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="business">
+                    <div class="blog-image">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="blog-category">Business</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <div class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>June 15, 2024</span>
+                            </div>
+                            <div class="blog-author">
+                                <i class="fas fa-user"></i>
+                                <span>Business Team</span>
+                            </div>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="#">ROI of Professional Print Services</a>
+                        </h3>
+                        <p class="blog-excerpt">Calculate the return on investment for professional printing services and understand how quality printing impacts your business success and brand perception.</p>
+                        <a href="#" class="blog-read-more">
+                            Read More
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
             </div>
-         </div>
-      </div>
-      <!-- footer section end -->
-      <!-- copyright section start -->
-      <div class="copyright_section">
-         <div class="container">
-            <p class="copyright_text">2025 All Rights Reserved.</p>
-         </div>
-      </div>
-      <!-- copyright section end -->
-      <!-- Javascript files-->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="js/jquery-3.0.0.min.js"></script>
-      <script src="js/plugin.js"></script>
-      <!-- sidebar -->
-      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="js/custom.js"></script>
-      <script>
-         $('#myCarousel').carousel({
-            interval: false
-         });
-         
-         //scroll slides on swipe for touch enabled devices
-         
-         $("#myCarousel").on("touchstart", function(event){
-         
-            var yClick = event.originalEvent.touches[0].pageY;
-            $(this).one("touchmove", function(event){
-         
-                var yMove = event.originalEvent.touches[0].pageY;
-                if( Math.floor(yClick - yMove) > 1 ){
-                    $(".carousel").carousel('next');
-                }
-                else if( Math.floor(yClick - yMove) < -1 ){
-                    $(".carousel").carousel('prev');
-                }
-            });
-            $(".carousel").on("touchend", function(){
-                $(this).off("touchmove");
-            });
-         });
-      </script>
-   </body>
-</html>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h3>Stay Updated</h3>
+                <p>Subscribe to our newsletter and never miss the latest printing tips, industry news, and exclusive offers.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Cimos Printing Press</h3>
+                    <p>Professional printing services with a commitment to quality, innovation, and customer satisfaction. Your vision, our expertise.</p>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <a href="https://facebook.com/CimosPrintingPress" style="color: var(--text-light); font-size: 1.5rem; transition: var(--transition);">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>

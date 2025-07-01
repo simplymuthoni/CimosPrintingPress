@@ -1,182 +1,875 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Portfolio</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-      <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="css/style.css">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="images/fevicon.png" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <!-- fonts -->
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-      <!-- font awesome css -->
-      <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-   </head>
-   <body>
-      <!-- header section start -->
-      <div class="header_section header_bg">
-         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-               <div class="logo"><a href="index.html"><img src="images/CimosWeb.png"></a></div>
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-               </button>
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav ml-auto">
-                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="portfolio.html">Portfolio</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="service.html">Service</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                     </li>
-                  </ul>
-               </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Cimos Printing Press</title>
+    <meta name="description" content="Explore our portfolio of professional printing services including plate making, printing, book binding, and paper cutting projects.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Modern Color Palette */
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f59e0b;
+            --accent-color: #10b981;
+            --dark-color: #111827;
+            --light-gray: #f8fafc;
+            --medium-gray: #64748b;
+            --border-color: #e2e8f0;
+            --white: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            
+            /* Typography */
+            --font-primary: 'Inter', sans-serif;
+            --font-display: 'Playfair Display', serif;
+            
+            /* Spacing */
+            --section-padding: 5rem 0;
+            --container-padding: 0 1.5rem;
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 60%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(15deg);
+            border-radius: 50px;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        /* Portfolio Filters */
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-color);
+            background: var(--white);
+            color: var(--text-dark);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-section {
+            padding: 4rem 0;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--light-gray);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-image {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: var(--white);
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-description {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .portfolio-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Portfolio Details */
+        .portfolio-details {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 0 0 20px 20px;
+            border: 1px solid var(--border-color);
+            border-top: none;
+        }
+
+        .portfolio-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-client {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .portfolio-date {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+            background: var(--light-gray);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--dark-color) 0%, #374151 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-description {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: var(--text-light);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: var(--shadow-lg);
+                border-radius: 0 0 20px 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .filter-btn {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .portfolio-grid {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <img src="images/cimos.png" alt="Cimos Logo" class="logo-img" style="width: 50px; height: 50px; border-radius: 5%;">
+                <a href="index.html" class="logo">Cimos</a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="service.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="quote.html" class="nav-link">Get Quote</a></li>
+                </ul>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </nav>
-         </div>
-      </div>
-      <!-- header section end -->
-      <!-- portfolio section start -->
-      <div class="portfolio_section layout_padding">
-         <div class="container">
-            <div class="row">
-               <div class="col-sm-12">
-                  <h1 class="portfolio_taital">Our <span class="portfolio_taital_1">Portfolio</span></h1>
-               </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-title">Our Portfolio</h1>
+                <p class="page-subtitle">Explore our diverse range of completed projects showcasing our expertise in professional printing services and creative solutions.</p>
             </div>
-            <div class="portfolio_section">
-               <div class="portfolio_section_2">
-                  <div class="row">
-                     <div class="col-md-8">
-                        <div class="container_main">
-                           <img src="images/8324321.png" alt="" class="image">
-                           <div class="overlay">
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/delivery2.png" alt="Cimos Website" class="image">
-                           <div class="overlay">
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="portfolio_section_2">
-                  <div class="row">
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/1.png" alt="" class="image">
-                           <div class="overlay">
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/2.png" alt="" class="image">
-                           <div class="overlay">
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/3.png" alt="" class="image">
-                           <div class="overlay">
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Filters -->
+    <section class="portfolio-section">
+        <div class="container">
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="printing">Printing</button>
+                <button class="filter-btn" data-filter="binding">Book Binding</button>
+                <button class="filter-btn" data-filter="plates">Plate Making</button>
+                <button class="filter-btn" data-filter="cutting">Paper Cutting</button>
             </div>
-         </div>
-      </div>
-      <!-- portfolio section end -->
-      <!-- footer section start -->
-      <div class="footer_section">
-         <div class="container">
-            <div class="location_text">
-               <ul>
-                  <li>
-                     <a href="https://www.google.com/maps/place/MWEA+APEX+COLLEGE/@-0.6843241,37.3517941,17z/data=!3m1!4b1!4m6!3m5!1s0x1826210ef46f6dd5:0x3331084c5c745d43!8m2!3d-0.6843241!4d37.354369!16s%2Fg%2F11c0pzqkf0?authuser=0&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                     <a href="tel:+254742638204"><i class="fa fa-phone" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                     <a href="mailto:cimossupplies@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                  </li>
-               </ul>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid">
+                <!-- Printing Projects -->
+                <div class="portfolio-item" data-category="printing">
+                    <div class="portfolio-category">Printing</div>
+                    <img src="images/1.png" alt="Receipt Printing" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Receipt & Invoice Printing</h3>
+                        <p class="portfolio-description">High-quality receipt and invoice printing for businesses with crisp, clear text and professional formatting.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Local Businesses</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="printing">
+                    <div class="portfolio-category">Printing</div>
+                    <img src="images/delivery2.png" alt="Business Cards" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Business Cards & Stationery</h3>
+                        <p class="portfolio-description">Professional business cards and corporate stationery with premium finishes and attention to detail.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Corporate Clients</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Binding Projects -->
+                <div class="portfolio-item" data-category="binding">
+                    <div class="portfolio-category">Book Binding</div>
+                    <img src="images/2.png" alt="Book Binding" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Professional Book Binding</h3>
+                        <p class="portfolio-description">Expert book binding services combining traditional craftsmanship with modern techniques for durable publications.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Publishers</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="binding">
+                    <div class="portfolio-category">Book Binding</div>
+                    <img src="images/bg1.png" alt="Academic Books" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Academic Publications</h3>
+                        <p class="portfolio-description">High-quality binding for academic books, journals, and research publications with long-lasting durability.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Educational Institutions</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plate Making Projects -->
+                <div class="portfolio-item" data-category="plates">
+                    <div class="portfolio-category">Plate Making</div>
+                    <img src="images/3.png" alt="Plate Making" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Precision Plate Making</h3>
+                        <p class="portfolio-description">Advanced plate making services using cutting-edge technology for precise and durable printing plates.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Printing Companies</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="plates">
+                    <div class="portfolio-category">Plate Making</div>
+                    <img src="images/bg2.png" alt="Commercial Plates" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Commercial Printing Plates</h3>
+                        <p class="portfolio-description">High-quality plates for commercial printing applications with exceptional detail and longevity.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Commercial Printers</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paper Cutting Projects -->
+                <div class="portfolio-item" data-category="cutting">
+                    <div class="portfolio-category">Paper Cutting</div>
+                    <img src="images/bg3.png" alt="Paper Cutting" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Precision Paper Cutting</h3>
+                        <p class="portfolio-description">Accurate paper cutting services for all paper types and sizes with clean, precise cuts.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Various Industries</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="cutting">
+                    <div class="portfolio-category">Paper Cutting</div>
+                    <img src="images/Banner.png" alt="Custom Cutting" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Custom Paper Solutions</h3>
+                        <p class="portfolio-description">Specialized paper cutting services for unique requirements and custom specifications.</p>
+                    </div>
+                    <div class="portfolio-details">
+                        <div class="portfolio-meta">
+                            <span class="portfolio-client">Custom Orders</span>
+                            <span class="portfolio-date">2024</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- footer section end -->
-      <!-- copyright section start -->
-      <div class="copyright_section">
-         <div class="container">
-            <p class="copyright_text">2025 All Rights Reserved.</p>
-         </div>
-      </div>
-      <!-- copyright section end -->
-      <!-- Javascript files-->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="js/jquery-3.0.0.min.js"></script>
-      <script src="js/plugin.js"></script>
-      <!-- sidebar -->
-      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="js/custom.js"></script>
-      <script>
-         $('#myCarousel').carousel({
-            interval: false
-         });
-         
-         //scroll slides on swipe for touch enabled devices
-         
-         $("#myCarousel").on("touchstart", function(event){
-         
-            var yClick = event.originalEvent.touches[0].pageY;
-            $(this).one("touchmove", function(event){
-         
-                var yMove = event.originalEvent.touches[0].pageY;
-                if( Math.floor(yClick - yMove) > 1 ){
-                    $(".carousel").carousel('next');
-                }
-                else if( Math.floor(yClick - yMove) < -1 ){
-                    $(".carousel").carousel('prev');
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Start Your Project?</h2>
+            <p class="cta-description">Let's bring your printing vision to life with our professional services and expertise.</p>
+            <a href="quote.html" class="btn btn-primary">
+                <i class="fas fa-rocket"></i>
+                Get Your Quote
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Cimos Printing Press</h3>
+                    <p>Professional printing services with quality assured since day one. From concept to completion, we deliver exceptional results.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="service.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Plate Making</a></li>
+                        <li><a href="#">Professional Printing</a></li>
+                        <li><a href="#">Book Binding</a></li>
+                        <li><a href="#">Paper Cutting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +254 742 638 204</li>
+                        <li><i class="fas fa-envelope"></i> cimossupplies@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Mwea, Kenya</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Cimos Printing Press. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Portfolio filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 100);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
-            $(".carousel").on("touchend", function(){
-                $(this).off("touchmove");
-            });
-         });
-      </script>
-   </body>
-</html>
+        }, observerOptions);
+
+        // Observe portfolio items
+        portfolioItems.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+
+        // Counter animation for stats
+        const counters = document.querySelectorAll('.stat-number');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.textContent);
+                    const increment = target / 100;
+                    let current = 0;
+
+                    const updateCounter = () => {
+                        if (current < target) {
+                            current += increment;
+                            counter.textContent = Math.floor(current) + (counter.textContent.includes('+') ? '+' : counter.textContent.includes('%') ? '%' : '');
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target + (counter.textContent.includes('+') ? '+' : counter.textContent.includes('%') ? '%' : '');
+                        }
+                     };
+
+                    updateCounter();
+                }
+            });  
+        }, observerOptions);

@@ -745,7 +745,7 @@
                         <span>Quote request submitted successfully! We'll get back to you within 24 hours.</span>
                     </div>
 
-                    <form class="quote-form" id="quoteForm">
+                    <form class="quote-form" id="quoteForm" method="POST" action="quote.php">
                         <!-- Personal Information -->
                         <div class="form-section">
                             <h3 class="section-title">
@@ -847,13 +847,14 @@
                                     <label class="form-label" for="projectType">Project Type</label>
                                     <select id="projectType" name="projectType" class="form-select">
                                         <option value="">Select project type</option>
-                                        <option value="business-cards">Business Cards</option>
-                                        <option value="brochures">Brochures</option>
-                                        <option value="flyers">Flyers</option>
-                                        <option value="books">Books</option>
-                                        <option value="magazines">Magazines</option>
+                                        <option value="cash-sales">Cash Sales</option>
+                                        <option value="receipt">Receipt</option>
+                                        <option value="invoice">Invoice</option>
+                                        <option value="delivery">Delivery</option>
                                         <option value="posters">Posters</option>
-                                        <option value="banners">Banners</option>
+                                        <option value="envelopes">Envelopes</option>
+                                        <option value="revision-books">Revision Books</option>
+                                        <option value="newsletters">Newsletters</option>
                                         <option value="other">Other</option>
                                     </select>
                                 </div>
@@ -873,6 +874,14 @@
                                         <option value="letter">Letter (8.5 × 11 in)</option>
                                         <option value="legal">Legal (8.5 × 14 in)</option>
                                         <option value="custom">Custom Size</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="particulars">Particulars</label>
+                                    <select id="particulars" name="particulars" class="form-select">
+                                        <option value="">Select particulars</option>
+                                        <option value="bankpaper">Bank Paper</option>
+                                        <option value="ncr">NCR Paper</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
