@@ -907,4 +907,103 @@
                             </label>
                         </div>
 
-                        <!--
+                        <!-- Submit Button -->
+                        <div class="form-section">
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <span>Submit Request</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Quote Info Sidebar -->
+                <aside class="quote-info">
+                    <h3 class="info-title">Why Choose Cimos?</h3>
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <div class="info-icon"><i class="fas fa-clock"></i></div>
+                            <div class="info-content">
+                                <h4>Fast Turnaround</h4>
+                                <p>Quick processing to meet your tight deadlines.</p>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon"><i class="fas fa-thumbs-up"></i></div>
+                            <div class="info-content">
+                                <h4>Quality Assurance</h4>
+                                <p>We guarantee precision and quality in every project.</p>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon"><i class="fas fa-leaf"></i></div>
+                            <div class="info-content">
+                                <h4>Eco-Friendly</h4>
+                                <p>We use sustainable practices and recyclable materials.</p>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon"><i class="fas fa-headset"></i></div>
+                            <div class="info-content">
+                                <h4>Dedicated Support</h4>
+                                <p>Our team is here to help at every step of the process.</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="contact-card">
+                        <h3>Need Help?</h3>
+                        <div class="contact-methods">
+                            <a href="tel:+254742638204" class="contact-method"><i class="fas fa-phone-alt"></i></a>
+                            <a href="mailto:cimossupplies@gmail.com" class="contact-method"><i class="fas fa-envelope"></i></a>
+                            <a href="tels:+254742638204" class="contact-method"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                        <div class="response-time">We respond within 24 hours</div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Set today's date as minimum for deadline field
+        const deadlineInput = document.getElementById('deadline');
+        const today = new Date().toISOString().split('T')[0];
+        deadlineInput.setAttribute('min', today);
+
+        // Handle form submission (basic UI feedback)
+        const quoteForm = document.getElementById('quoteForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        quoteForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Add loading state
+            submitBtn.classList.add('loading');
+            submitBtn.innerHTML = '<div class="spinner"></div><span>Submitting...</span>';
+
+            setTimeout(() => {
+                // Reset button
+                submitBtn.classList.remove('loading');
+                submitBtn.innerHTML = '<span>Submit Request</span><i class="fas fa-paper-plane"></i>';
+
+                // Show success message
+                successMessage.classList.add('show');
+
+                // Optionally reset form
+                quoteForm.reset();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
