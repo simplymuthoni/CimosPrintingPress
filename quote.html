@@ -409,6 +409,26 @@
             color: var(--text-light);
         }
 
+        /*Price Estimate*/
+        .price-estimate-box {
+            border: 1px solid #ddd;
+            padding: 1em;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+        .estimate-summary p {
+            margin: 0.5em 0;
+        }
+        .total-price {
+            color: green;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .error {
+            color: red;
+        }
+
+
         /* File Upload */
         .file-upload {
             position: relative;
@@ -960,10 +980,21 @@
                             </div>
                         </div>
 
+                        <!-- Price Estimate -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <span class="section-icon">5</span>
+                                Price Estimate
+                            </h3>
+                            <div id="priceEstimate" class="price-estimate-box">
+                                <p>Fill in project type, quantity, color mode, and services to calculate estimate.</p>
+                            </div>
+                        </div>
+
                         <!-- File Upload -->
                         <div class="form-section">
                             <h3 class="section-title">
-                                <span class="section-icon">4</span>
+                                <span class="section-icon">6</span>
                                 Upload Files (Optional)
                             </h3>
                             <label class="file-upload" for="fileUpload">
@@ -1082,6 +1113,70 @@
             paperSizeSelect.value = '';
         }
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const projectType = document.getElementById('projectType');
+    const quantity = document.getElementById('quantity');
+    const paperSize = document.getElementById('paperSize');
+    const colorMode = document.getElementById('colorMode');
+    const services = document.querySelectorAll('input[name="services[]"]');
+    const priceEstimateBox = document.getElementById('priceEstimate');
+
+    function getSelectedServices() {
+        return Array.from(services)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+    }
+
+    async function fetchPriceEstimate() {
+        const data = {
+            projectType: projectType.value,
+            quantity: parseInt(quantity.value),
+            paperSize: paperSize.value,
+            colorMode: colorMode.value,
+            services: getSelectedServices()
+        };
+
+        // Basic validation before sending
+        if (!data.projectType || !data.quantity || data.quantity <= 0) {
+            priceEstimateBox.innerHTML = "<p>Please enter a valid project type and quantity.</p>";
+            return;
+        }
+
+        try {
+            const response = await fetch('quoteCalc.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (!result.success) {
+                priceEstimateBox.innerHTML = `<p class="error">Error: ${result.error}</p>`;
+                return;
+            }
+
+            const breakdown = result.breakdown;
+            priceEstimateBox.innerHTML = `
+                <div class="estimate-summary">
+                    <p><strong>Base Price:</strong> KSH ${breakdown.basePrice.amount} (${breakdown.basePrice.description})</p>
+                    <p><strong>Additional Services:</strong> KSH ${breakdown.additionalServices.amount} (${breakdown.additionalServices.description})</p>
+                    <p><strong>Color Mode:</strong> ${breakdown.colorAdjustment.description} (x${breakdown.colorAdjustment.multiplier})</p>
+                    <p><strong>Total Estimated Price:</strong> <span class="total-price">KSH ${breakdown.totalPrice.amount}</span></p>
+                </div>
+            `;
+        } catch (err) {
+            priceEstimateBox.innerHTML = `<p class="error">Failed to fetch price estimate. Please try again.</p>`;
+        }
+    }
+
+    // Trigger price calculation on changes
+    [projectType, quantity, paperSize, colorMode].forEach(input => {
+        input.addEventListener('change', fetchPriceEstimate);
+    });
+    services.forEach(cb => cb.addEventListener('change', fetchPriceEstimate));
+});
 
     // Handle mobile menu toggle
     mobileMenuBtn.addEventListener('click', () => {
