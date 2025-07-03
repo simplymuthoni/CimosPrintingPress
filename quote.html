@@ -317,13 +317,32 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .form-input:invalid {
+        .form-input:disabled,
+        .form-select:disabled {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .form-input.error {
             border-color: var(--error-color);
         }
 
-        .form-input:valid {
+        .form-input.valid {
             border-color: var(--success-color);
         }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
 
         /* Service Selection */
         .service-grid {
@@ -432,6 +451,41 @@
             color: var(--text-light);
         }
 
+         .file-list {
+            margin-top: 1rem;
+            padding: 0;
+            list-style: none;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .file-name {
+            font-size: 0.875rem;
+            color: var(--text-dark);
+        }
+
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--error-color);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
         /* Submit Button */
         .submit-btn {
             width: 100%;
@@ -457,6 +511,12 @@
 
         .submit-btn:active {
             transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* Quote Info Sidebar */
@@ -847,10 +907,18 @@
                                     <label class="form-label" for="projectType">Project Type</label>
                                     <select id="projectType" name="projectType" class="form-select">
                                         <option value="">Select project type</option>
-                                        <option value="cash-sales">Cash Sales</option>
-                                        <option value="receipt">Receipt</option>
-                                        <option value="invoice">Invoice</option>
-                                        <option value="delivery">Delivery</option>
+                                        <option value="cash-sales">Cash Sales (A4) Bank Paper</option>
+                                        <option value="cash-sales-ncr">Cash Sales (A4) NCR Paper</option>
+                                        <option value="receipt">Receipt (A5) Bank Paper</option>
+                                        <option value="receipt-ncr">Receipt (A5) NCR Paper</option>
+                                        <option value="receipt-bank">Receipt (A6) Bank Paper</option>
+                                        <option value="receipt-ncr-a6">Receipt (A6) NCR Paper</option>
+                                        <option value="invoice">Invoice (A5) Bank Paper</option>
+                                        <option value="invoice-ncr">Invoice (A5) NCR Paper</option>
+                                        <option value="invoice-a6">Invoice (A6) Bank Paper</option>
+                                        <option value="invoice-ncr-a6">Invoice (A6) NCR Paper</option>
+                                        <option value="delivery-note">Delivery Note (A5) Bank Paper</option>
+                                        <option value="delivery-note-ncr">Delivery Note (A5) NCR Paper</
                                         <option value="posters">Posters</option>
                                         <option value="envelopes">Envelopes</option>
                                         <option value="revision-books">Revision Books</option>
@@ -874,14 +942,6 @@
                                         <option value="letter">Letter (8.5 × 11 in)</option>
                                         <option value="legal">Legal (8.5 × 14 in)</option>
                                         <option value="custom">Custom Size</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="particulars">Particulars</label>
-                                    <select id="particulars" name="particulars" class="form-select">
-                                        <option value="">Select particulars</option>
-                                        <option value="bankpaper">Bank Paper</option>
-                                        <option value="ncr">NCR Paper</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -976,43 +1036,87 @@
 
     <!-- Scripts -->
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
+    // Project type to paper size mapping
+    const projectTypePaperSizeMap = {
+        'cash-sales': 'a4',
+        'cash-sales-ncr': 'a4',
+        'receipt': 'a5',
+        'receipt-ncr': 'a5',
+        'receipt-bank': 'a6',
+        'receipt-ncr-a6': 'a6',
+        'invoice': 'a5',
+        'invoice-ncr': 'a5',
+        'invoice-a6': 'a6',
+        'invoice-ncr-a6': 'a6',
+        'delivery-note': 'a5',
+        'delivery-note-ncr': 'a5'
+    };
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
+    // Get form and UI elements
+    const projectTypeSelect = document.getElementById('projectType');
+    const paperSizeSelect = document.getElementById('paperSize');
+    const quoteForm = document.getElementById('quoteForm');
+    const successMessage = document.getElementById('successMessage');
+    const submitBtn = document.getElementById('submitBtn');
+    const deadlineInput = document.getElementById('deadline');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
 
-        // Set today's date as minimum for deadline field
-        const deadlineInput = document.getElementById('deadline');
-        const today = new Date().toISOString().split('T')[0];
-        deadlineInput.setAttribute('min', today);
+    // Set today's date as minimum for deadline field
+    const today = new Date().toISOString().split('T')[0];
+    deadlineInput.setAttribute('min', today);
 
-        // Handle form submission (basic UI feedback)
-        const quoteForm = document.getElementById('quoteForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const successMessage = document.getElementById('successMessage');
+    // Handle project type change
+    projectTypeSelect.addEventListener('change', function () {
+        const selectedProjectType = this.value;
 
-        quoteForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        if (projectTypePaperSizeMap.hasOwnProperty(selectedProjectType)) {
+            paperSizeSelect.value = projectTypePaperSizeMap[selectedProjectType];
+            paperSizeSelect.disabled = true;
+            paperSizeSelect.style.backgroundColor = '#f8f9fa';
+            paperSizeSelect.style.color = '#6c757d';
+        } else {
+            paperSizeSelect.disabled = false;
+            paperSizeSelect.style.backgroundColor = 'white';
+            paperSizeSelect.style.color = 'inherit';
+            paperSizeSelect.value = '';
+        }
+    });
 
-            // Add loading state
-            submitBtn.classList.add('loading');
-            submitBtn.innerHTML = '<div class="spinner"></div><span>Submitting...</span>';
+    // Handle mobile menu toggle
+    mobileMenuBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
 
+    // Handle form submission
+    quoteForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Add loading state to button
+        submitBtn.classList.add('loading');
+        submitBtn.innerHTML = '<div class="spinner"></div><span>Submitting...</span>';
+
+        setTimeout(() => {
+            // Reset button
+            submitBtn.classList.remove('loading');
+            submitBtn.innerHTML = '<span>Submit Request</span><i class="fas fa-paper-plane"></i>';
+
+            // Show success message
+            successMessage.classList.add('show');
+            successMessage.scrollIntoView({ behavior: 'smooth' });
+
+            // Reset form
+            quoteForm.reset();
+            paperSizeSelect.disabled = false;
+            paperSizeSelect.style.backgroundColor = 'white';
+            paperSizeSelect.style.color = 'inherit';
+
+            // Hide success message after 3 seconds
             setTimeout(() => {
-                // Reset button
-                submitBtn.classList.remove('loading');
-                submitBtn.innerHTML = '<span>Submit Request</span><i class="fas fa-paper-plane"></i>';
-
-                // Show success message
-                successMessage.classList.add('show');
-
-                // Optionally reset form
-                quoteForm.reset();
-            }, 2000);
-        });
-    </script>
+                successMessage.classList.remove('show');
+            }, 3000);
+        }, 2000);
+    });
+</script>
 </body>
 </html>
