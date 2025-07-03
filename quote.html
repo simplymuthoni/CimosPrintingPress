@@ -1144,7 +1144,7 @@
         }
 
         try {
-            const response = await fetch('quoteCalc.php', {
+            const response = await fetch('quotecalc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -1167,6 +1167,7 @@
                 </div>
             `;
         } catch (err) {
+            console.error('Error fetching price estimate:', err);
             priceEstimateBox.innerHTML = `<p class="error">Failed to fetch price estimate. Please try again.</p>`;
         }
     }
