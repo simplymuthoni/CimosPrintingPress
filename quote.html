@@ -411,23 +411,59 @@
 
         /*Price Estimate*/
         .price-estimate-box {
-            border: 1px solid #ddd;
-            padding: 1em;
-            background: #f9f9f9;
-            border-radius: 6px;
-        }
-        .estimate-summary p {
-            margin: 0.5em 0;
-        }
-        .total-price {
-            color: green;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        .error {
-            color: red;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+            transition: var(--transition);
         }
 
+        .price-estimate-box.has-estimate {
+            background: var(--white);
+            border-color: var(--success-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .estimate-summary p {
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .estimate-summary p:last-child {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .total-price {
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .estimate-label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .estimate-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .error {
+            color: var(--error-color);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .loading-estimate {
+            text-align: center;
+            color: var(--text-light);
+            font-style: italic;
+        }
 
         /* File Upload */
         .file-upload {
@@ -1114,69 +1150,140 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-    const projectType = document.getElementById('projectType');
-    const quantity = document.getElementById('quantity');
-    const paperSize = document.getElementById('paperSize');
-    const colorMode = document.getElementById('colorMode');
-    const services = document.querySelectorAll('input[name="services[]"]');
-    const priceEstimateBox = document.getElementById('priceEstimate');
+    document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("quoteForm");
+  const projectType = document.getElementById("projectType");
+  const quantity = document.getElementById("quantity");
+  const paperSize = document.getElementById("paperSize");
+  const colorMode = document.getElementById("colorMode");
+  const services = document.querySelectorAll("input[name='services[]']");
+  const priceBox = document.getElementById("priceEstimate");
 
-    function getSelectedServices() {
-        return Array.from(services)
-            .filter(cb => cb.checked)
-            .map(cb => cb.value);
+  const priceTable = {
+    'cash-sales': {
+      bank: { '6-12': 350, '13-24': 340, '25-48': 330, '49-100': 320 },
+      ncr: { '6-12': 400, '13-24': 390, '25-48': 380, '49-100': 370 }
+    },
+    'cash-sales-ncr': {
+      bank: { '6-12': 350, '13-24': 340, '25-48': 330, '49-100': 320 },
+      ncr: { '6-12': 400, '13-24': 390, '25-48': 380, '49-100': 370 }
+    },
+    'receipt': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 420, '13-24': 410, '25-48': 400, '49-100': 390 }
+    },
+    'receipt-ncr': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 420, '13-24': 410, '25-48': 400, '49-100': 390 }
+    },
+    'invoice': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 420, '13-24': 410, '25-48': 400, '49-100': 390 }
+    },
+    'invoice-ncr': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 420, '13-24': 410, '25-48': 400, '49-100': 390 }
+    },
+    'delivery-note': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 420, '13-24': 410, '25-48': 400, '49-100': 390 }
+    },
+    'delivery-note-ncr': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 420, '13-24': 410, '25-48': 400, '49-100': 390 }
+    },
+    'receipt-bank': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 550, '13-24': 540, '25-48': 530, '49-100': 530 }
+    },
+    'receipt-ncr-a6': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 550, '13-24': 540, '25-48': 530, '49-100': 530 }
+    },
+    'invoice-a6': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 550, '13-24': 540, '25-48': 530, '49-100': 530 }
+    },
+    'invoice-ncr-a6': {
+      bank: { '6-12': 500, '13-24': 490, '25-48': 480, '49-100': 470 },
+      ncr: { '6-12': 550, '13-24': 540, '25-48': 530, '49-100': 530 }
+    }
+  };
+
+  const servicePrices = {
+    platemaking: 100,
+    printing: 200,
+    bookbinding: 50,
+    papercutting: 10
+  };
+
+  const colorMultipliers = {
+    "full-color": 1.5,
+    "spot-color": 1.2,
+    "black-white": 1.0
+  };
+
+  function getQuantityRange(qty) {
+    if (qty < 6) return '6-12';
+    if (qty >= 6 && qty <= 12) return '6-12';
+    if (qty >= 13 && qty <= 24) return '13-24';
+    if (qty >= 25 && qty <= 48) return '25-48';
+    return '49-100';
+  }
+
+  function getPaperType(project) {
+    return project.includes('ncr') ? 'ncr' : 'bank';
+  }
+
+  function calculateEstimate() {
+    const selectedProject = projectType.value;
+    const qty = parseInt(quantity.value, 10);
+    const selectedColor = colorMode.value;
+    const selectedPaper = paperSize.value;
+    if (!selectedProject || !qty || !selectedColor) {
+      priceBox.classList.remove("has-estimate");
+      priceBox.innerHTML = `<p class="loading-estimate">Fill in project type, quantity, and color mode to calculate estimate.</p>`;
+      return;
     }
 
-    async function fetchPriceEstimate() {
-        const data = {
-            projectType: projectType.value,
-            quantity: parseInt(quantity.value),
-            paperSize: paperSize.value,
-            colorMode: colorMode.value,
-            services: getSelectedServices()
-        };
+    const quantityRange = getQuantityRange(qty);
+    const paperType = getPaperType(selectedProject);
+    const base = priceTable[selectedProject]?.[paperType]?.[quantityRange] || 300;
 
-        // Basic validation before sending
-        if (!data.projectType || !data.quantity || data.quantity <= 0) {
-            priceEstimateBox.innerHTML = "<p>Please enter a valid project type and quantity.</p>";
-            return;
-        }
-
-        try {
-            const response = await fetch('quotecalc.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            const result = await response.json();
-
-            if (!result.success) {
-                priceEstimateBox.innerHTML = `<p class="error">Error: ${result.error}</p>`;
-                return;
-            }
-
-            const breakdown = result.breakdown;
-            priceEstimateBox.innerHTML = `
-                <div class="estimate-summary">
-                    <p><strong>Base Price:</strong> KSH ${breakdown.basePrice.amount} (${breakdown.basePrice.description})</p>
-                    <p><strong>Additional Services:</strong> KSH ${breakdown.additionalServices.amount} (${breakdown.additionalServices.description})</p>
-                    <p><strong>Color Mode:</strong> ${breakdown.colorAdjustment.description} (x${breakdown.colorAdjustment.multiplier})</p>
-                    <p><strong>Total Estimated Price:</strong> <span class="total-price">KSH ${breakdown.totalPrice.amount}</span></p>
-                </div>
-            `;
-        } catch (err) {
-            console.error('Error fetching price estimate:', err);
-            priceEstimateBox.innerHTML = `<p class="error">Failed to fetch price estimate. Please try again.</p>`;
-        }
-    }
-
-    // Trigger price calculation on changes
-    [projectType, quantity, paperSize, colorMode].forEach(input => {
-        input.addEventListener('change', fetchPriceEstimate);
+    // Services total
+    let addOns = 0;
+    let selectedServiceNames = [];
+    services.forEach(service => {
+      if (service.checked) {
+        selectedServiceNames.push(service.value);
+        addOns += servicePrices[service.value] || 0;
+      }
     });
-    services.forEach(cb => cb.addEventListener('change', fetchPriceEstimate));
+
+    // Special binding price adjustment
+    if (selectedServiceNames.includes("bookbinding") && selectedPaper === "a4") {
+      addOns += 50; // If '50x2', set to 70 or more based on your rule
+    }
+
+    const multiplier = colorMultipliers[selectedColor] || 1;
+    const total = (base + addOns) * multiplier;
+
+    priceBox.classList.add("has-estimate");
+    priceBox.innerHTML = `
+      <div class="estimate-summary">
+        <p><span class="estimate-label">Base Price:</span> <span class="estimate-value">KES ${base}</span></p>
+        <p><span class="estimate-label">Additional Services:</span> <span class="estimate-value">KES ${addOns}</span></p>
+        <p><span class="estimate-label">Color Mode Multiplier:</span> <span class="estimate-value">x${multiplier}</span></p>
+        <p><span class="estimate-label">Total Estimate:</span> <span class="total-price">KES ${total.toFixed(2)}</span></p>
+      </div>
+    `;
+  }
+
+  // Add event listeners
+  [projectType, quantity, paperSize, colorMode].forEach(el =>
+    el.addEventListener("input", calculateEstimate)
+  );
+  services.forEach(service => service.addEventListener("change", calculateEstimate));
 });
 
     // Handle mobile menu toggle

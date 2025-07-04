@@ -1,30 +1,56 @@
 <?php
+// Enable error reporting for debugging (remove in production)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Set proper headers for JSON response and CORS
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
+// Handle preflight OPTIONS request (required for CORS)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
+    echo json_encode(['error' => 'Method not allowed', 'success' => false]);
     exit;
 }
 
-// Get JSON input
-$input = json_decode(file_get_contents('php://input'), true);
-
-if (!$input) {
+// Get JSON input with error handling
+$rawInput = file_get_contents('php://input');
+if ($rawInput === false) {
     http_response_code(400);
-    echo json_encode(['error' => 'Invalid JSON input']);
+    echo json_encode(['error' => 'Unable to read request body', 'success' => false]);
     exit;
 }
 
-// Extract data
+$input = json_decode($rawInput, true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode([
+        'error' => 'Invalid JSON input: ' . json_last_error_msg(),
+        'success' => false
+    ]);
+    exit;
+}
+
+// Extract data with defaults
 $projectType = $input['projectType'] ?? '';
 $quantity = (int)($input['quantity'] ?? 0);
 $paperSize = $input['paperSize'] ?? '';
-$colorMode = $input['colorMode'] ?? '';
+$colorMode = $input['colorMode'] ?? 'black-white';
 $services = $input['services'] ?? [];
+
+// Validate color mode
+$validColorModes = ['full-color', 'spot-color', 'black-white'];
+if (!in_array($colorMode, $validColorModes)) {
+    $colorMode = 'black-white'; // Default to black-white if invalid
+}
 
 // Price calculation function
 function calculatePrice($projectType, $quantity, $paperSize, $colorMode, $services) {
@@ -195,10 +221,17 @@ function calculatePrice($projectType, $quantity, $paperSize, $colorMode, $servic
     
     // Color mode adjustments
     $colorMultiplier = 1;
-    if ($colorMode === 'full-color') {
-        $colorMultiplier = 1.5; // 50% increase for full color
-    } elseif ($colorMode === 'spot-color') {
-        $colorMultiplier = 1.2; // 20% increase for spot color
+    switch ($colorMode) {
+        case 'full-color':
+            $colorMultiplier = 1.5; // 50% increase for full color (CMYK)
+            break;
+        case 'spot-color':
+            $colorMultiplier = 1.2; // 20% increase for spot color
+            break;
+        case 'black-white':
+        default:
+            $colorMultiplier = 1; // No increase for black & white
+            break;
     }
     
     $totalPrice = ($basePrice + $additionalServices) * $colorMultiplier;
@@ -212,45 +245,69 @@ function calculatePrice($projectType, $quantity, $paperSize, $colorMode, $servic
 }
 
 // Validate required fields
-if (empty($projectType) || $quantity <= 0) {
+if (empty($projectType)) {
     echo json_encode([
-        'error' => 'Project type and quantity are required',
+        'error' => 'Project type is required',
         'success' => false
     ]);
     exit;
 }
 
-// Calculate price
-$priceCalculation = calculatePrice($projectType, $quantity, $paperSize, $colorMode, $services);
+if ($quantity <= 0) {
+    echo json_encode([
+        'error' => 'Quantity must be greater than 0',
+        'success' => false
+    ]);
+    exit;
+}
 
-// Prepare response
-$response = [
-    'success' => true,
-    'projectType' => $projectType,
-    'quantity' => $quantity,
-    'paperSize' => $paperSize,
-    'colorMode' => $colorMode,
-    'services' => $services,
-    'pricing' => $priceCalculation,
-    'breakdown' => [
-        'basePrice' => [
-            'amount' => $priceCalculation['basePrice'],
-            'description' => 'Base price for ' . str_replace('-', ' ', $projectType)
-        ],
-        'additionalServices' => [
-            'amount' => $priceCalculation['additionalServices'],
-            'description' => 'Additional services: ' . implode(', ', $services)
-        ],
-        'colorAdjustment' => [
-            'multiplier' => $priceCalculation['colorMultiplier'],
-            'description' => 'Color mode: ' . ($colorMode ?: 'Standard')
-        ],
-        'totalPrice' => [
-            'amount' => $priceCalculation['totalPrice'],
-            'currency' => 'KSH'
+try {
+    // Calculate price
+    $priceCalculation = calculatePrice($projectType, $quantity, $paperSize, $colorMode, $services);
+    
+    // Color mode descriptions
+    $colorModeDescriptions = [
+        'full-color' => 'Full Color (CMYK)',
+        'spot-color' => 'Spot Color',
+        'black-white' => 'Black & White'
+    ];
+    
+    // Prepare response
+    $response = [
+        'success' => true,
+        'projectType' => $projectType,
+        'quantity' => $quantity,
+        'paperSize' => $paperSize,
+        'colorMode' => $colorMode,
+        'services' => $services,
+        'pricing' => $priceCalculation,
+        'breakdown' => [
+            'basePrice' => [
+                'amount' => $priceCalculation['basePrice'],
+                'description' => 'Base price for ' . str_replace('-', ' ', $projectType)
+            ],
+            'additionalServices' => [
+                'amount' => $priceCalculation['additionalServices'],
+                'description' => 'Additional services: ' . (empty($services) ? 'None' : implode(', ', $services))
+            ],
+            'colorAdjustment' => [
+                'multiplier' => $priceCalculation['colorMultiplier'],
+                'description' => $colorModeDescriptions[$colorMode] ?? 'Standard'
+            ],
+            'totalPrice' => [
+                'amount' => $priceCalculation['totalPrice'],
+                'currency' => 'KSH'
+            ]
         ]
-    ]
-];
+    ];
+    
+    echo json_encode($response, JSON_PRETTY_PRINT);
 
-echo json_encode($response, JSON_PRETTY_PRINT);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'Internal server error: ' . $e->getMessage(),
+        'success' => false
+    ]);
+}
 ?>
